@@ -137,4 +137,47 @@ displayarray_next:
 	ret
 endp
 
+; get 2 byte word in ax
+getword proc
+	push bx
+	call getbyte
+	mov bh, al
+	call getbyte
+	mov bl, al
+	mov ax, bx
+	pop bx
+	ret
+endp
 
+; display content of ax, (destroys)
+displayword proc
+	push bx
+	mov bl, al
+	mov al, ah
+	call displaybyte
+	mov al, bl
+	call displaybyte
+	pop bx
+	ret
+endp
+	
+; gets double word in dx-ax	
+getdoubleword proc
+	call getword
+	mov dx, ax
+	call getword
+	ret
+endp
+
+; displays dx-ax
+displaydoubleword proc
+	push ax
+	mov ax, dx
+	call displayword
+	pop ax
+	call displayword
+	ret
+endp	
+	
+
+; JUST AN IDEA: Write a general n-byte add procedure
