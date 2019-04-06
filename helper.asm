@@ -39,6 +39,15 @@ newline proc
 	ret
 endp
 
+space proc
+	push dx
+	mov dl, ' '
+	mov ah, 02
+	int 21h
+	pop dx
+	ret
+endp
+
 ; gets byte in al
 getbyte proc
 	push cx
@@ -181,3 +190,87 @@ endp
 	
 
 ; JUST AN IDEA: Write a general n-byte add procedure
+
+; arg1: location
+; arg2: rows
+; arg3: columns
+getmat proc
+	push bp
+	mov bp, sp
+	push dx
+	push cx
+	push bx
+	mov dl, [bp + 8] ; columns
+	mov dh, 0
+	mov cl, [bp + 6] ; rows
+	mov ch, 0
+	mov bx, [bp + 4] ; base address
+getmat_again:	
+	push dx
+	push bx
+	call getarray
+	pop bx
+	pop dx
+	add bx, dx
+	loop getmat_again
+	pop bx
+	pop cx
+	pop dx
+	pop bp
+	ret
+endp
+
+
+; arg1: location
+; arg2: rows
+; arg3: columns
+displaymat proc
+	push bp
+	mov bp, sp
+	push dx
+	push cx
+	push bx
+	mov dl, [bp + 8] ; columns
+	mov dh, 0
+	mov cl, [bp + 6] ; rows
+	mov ch, 0
+	mov bx, [bp + 4] ; base address
+displaymat_again:	
+	push dx
+	push bx
+	call displayrow
+	pop bx
+	pop dx
+	add bx, dx
+	loop displaymat_again
+	pop bx
+	pop cx
+	pop dx
+	pop bp
+	ret
+endp
+
+
+; arg1 address of row (assuming ds)
+; arg2 length of row
+displayrow proc
+	push bp
+	mov bp, sp
+	push si
+	push cx
+	mov si, [bp + 4]
+	mov cx, [bp + 6]
+displayrow_next:
+	mov al, [si]
+	call displaybyte
+	inc si
+	call space
+	loop displayrow_next
+	call newline
+	pop cx
+	pop si
+	pop bp
+	ret
+endp
+
+
