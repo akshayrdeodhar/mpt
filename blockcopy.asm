@@ -3,6 +3,7 @@
 .stack
 .data
 	msg1 db "Length:$"
+	msg2 db "Block:$"
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 	copy db 100 dup(?)
@@ -45,6 +46,15 @@ main proc
 	call printstring
 	pop si
 	call getbyte
+	push ax
+	call newline
+	pop ax
+	push si
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
+	pop si
 	push ax
 	call newline
 	pop ax

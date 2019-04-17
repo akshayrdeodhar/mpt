@@ -3,6 +3,8 @@
 .stack
 .data
 	msg1 db "Length:$"
+	msg2 db "Elements:$"
+	msg3 db "Smalles
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 .code
@@ -37,7 +39,6 @@ smallest_end:
 	pop bp
 	ret
 endp
-	
 
 main proc
 	mov ax, @data
@@ -47,6 +48,13 @@ main proc
 	call printstring
 	pop si
 	call getbyte
+	push ax
+	call newline
+	pop ax
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
 	push ax
 	call newline
 	pop ax
@@ -63,6 +71,14 @@ main proc
 	push ax
 	push si
 	call smallest
+	push ax
+	push si
+	mov si, offset msg3
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	call displaybyte
 	pop si
 	pop ax

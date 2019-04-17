@@ -2,6 +2,8 @@
 .model small
 .stack
 .data
+	msga db "Divdend:$"
+	msgb db "Divisor:$"
 	msg1 db "Quotient:$"
 	msg2 db "Remainder:$"
 	n_line db 0ah, 0dh, "$"
@@ -10,14 +12,32 @@
 
 include helper.asm
 
+; Program does not handle zero division error 
+
 main proc
 	mov ax, @data
 	mov ds, ax
+	push ax
+	push si
+	mov si, offset msga
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	call getword
 	push ax
 	call newline
 	pop ax
 	mov dx, ax
+	push ax
+	push si
+	mov si, offset msgb
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	call getbyte
 	push ax
 	call newline

@@ -3,6 +3,8 @@
 .stack
 .data
 	msg1 db "Length:$"
+	msg2 db "Block 1:$"
+	msg3 db "Block 2:$"
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 	copy db 100 dup(?)
@@ -51,6 +53,15 @@ main proc
 	push ax
 	call newline
 	pop ax
+	push si
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
+	pop si
+	push ax
+	call newline
+	pop ax
 	mov ah, 0
 	mov si, offset block
 	push ax
@@ -59,6 +70,17 @@ main proc
 	pop si
 	pop ax
 	mov si, offset copy
+	push ax
+	call newline
+	pop ax
+	push ax
+	push si
+	mov si, offset msg3
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	push ax
 	call newline
 	pop ax
@@ -84,7 +106,29 @@ main proc
 	pop ax
 	push ax
 	push si
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
+	push ax
+	call newline
+	pop ax
+	push ax
+	push si
 	call displayarray
+	pop si
+	pop ax
+	push ax
+	call newline
+	pop ax
+	push ax
+	push si
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
 	pop si
 	pop ax
 	push ax
@@ -95,6 +139,7 @@ main proc
 	call displayarray
 	pop di
 	pop ax
+	ret
 
 endp
 

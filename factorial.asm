@@ -2,8 +2,8 @@
 .model small
 .stack
 .data
-	msg1 db "Quotient:$"
-	msg2 db "Remainder:$"
+	msga db "Number:$"
+	msgb db "Factorial:$"
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 .code
@@ -29,12 +29,28 @@ factorial_lower:
 endp
 
 main proc
+	mov ax, @data
+	mov ds, ax
+	push si
+	mov si, offset msga
+	push si
+	call printstring
+	pop si
+	pop si
 	call getbyte
 	push ax
 	call newline
 	pop ax
 	push ax
 	call factorial
+	push ax
+	push si
+	mov si, offset msgb
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	call displaydoubleword
 	pop ax
 	ret

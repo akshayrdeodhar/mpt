@@ -3,6 +3,8 @@
 .stack
 .data
 	msg1 db "Length:$"
+	msg2 db "Array:$"
+	msg3 db "Sorted:$"
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 .code
@@ -35,6 +37,7 @@ sort_smaller:
 	ret
 endp
 
+
 main proc
 	mov ax, @data
 	mov ds, ax
@@ -43,6 +46,13 @@ main proc
 	call printstring
 	pop si
 	call getbyte
+	push ax
+	call newline
+	pop ax
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
 	push ax
 	call newline
 	pop ax

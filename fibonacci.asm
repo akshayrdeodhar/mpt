@@ -2,8 +2,8 @@
 .model small
 .stack
 .data
-	msg1 db "Quotient:$"
-	msg2 db "Remainder:$"
+	msga db "Number:$"
+	msgb db "Series:$"
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 .code
@@ -11,8 +11,25 @@
 include helper.asm
 
 main proc
+	mov ax, @data
+	mov ds, ax
+	mov si, offset msga
+	push si
+	call printstring
+	pop si
 	call getbyte
 	mov ah, 0
+	push ax
+	call newline
+	pop ax
+	push ax
+	push si
+	mov si, offset msgb
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	push ax
 	call newline
 	pop ax

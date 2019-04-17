@@ -3,7 +3,9 @@
 .stack
 .data
 	n_line db 0ah, 0dh, "$"
-	block db 100 dup(?)
+	msg1 db "N1:$"
+	msg2 db "N2:$"
+	msg3 db "Product:$"
 .code
 
 include helper.asm
@@ -33,11 +35,25 @@ skip:	shl dx, 1
 endp
 
 main proc
+	mov ax, @data
+	mov ds, ax
+	mov si, offset msg1
+	push ax
+	push si
+	call printstring
+	pop si
+	pop ax
 	call getbyte
 	push ax
 	call newline
 	pop ax
 	mov dh, al
+	mov si, offset msg2
+	push ax
+	push si
+	call printstring
+	pop si
+	pop ax
 	call getbyte
 	push ax
 	call newline
@@ -46,6 +62,12 @@ main proc
 	push dx
 	call product
 	pop dx
+	mov si, offset msg3
+	push ax
+	push si
+	call printstring
+	pop si
+	pop ax
 	call displayword
 	ret
 endp

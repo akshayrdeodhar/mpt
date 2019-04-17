@@ -3,6 +3,8 @@
 .stack
 .data
 	msg1 db "Length:$"
+	msg2 db "Elements:$"
+	msg3 db "Largest:$"
 	n_line db 0ah, 0dh, "$"
 	block db 100 dup(?)
 .code
@@ -51,6 +53,13 @@ main proc
 	push ax
 	call newline
 	pop ax
+	mov si, offset msg2
+	push si
+	call printstring
+	pop si
+	push ax
+	call newline
+	pop ax
 	mov ah, 0
 	mov si, offset block
 	push ax
@@ -64,6 +73,14 @@ main proc
 	push ax
 	push si
 	call largest
+	push ax
+	push si
+	mov si, offset msg3
+	push si
+	call printstring
+	pop si
+	pop si
+	pop ax
 	call displaybyte
 	pop si
 	pop ax

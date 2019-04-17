@@ -2,8 +2,8 @@
 .model small
 .stack
 .data
-	n_line db 0ah, 0dh, "$"
-	block db 100 dup(?)
+	msga db "Number 1:$"
+	msgb db "Number 2:$"
 .code
 
 include helper.asm
@@ -32,11 +32,21 @@ again:	add bx, dx
 endp
 
 main proc
+	mov ax, @data
+	mov ds, ax
+	mov si, offset msga
+	push si
+	call printstring
+	pop si
 	call getbyte
 	push ax
 	call newline
 	pop ax
 	mov dh, al
+	mov si, offset msgb
+	push si
+	call printstring
+	pop si
 	call getbyte
 	push ax
 	call newline
